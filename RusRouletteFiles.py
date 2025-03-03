@@ -131,15 +131,24 @@ def starter():
 
 #Runs at the end of the game. Gives options to play again
 def playagain():
- pa = input("Would you like to play again?\n Y/N")
- if pa in sey:
-     quit
-     main()
- elif pa in han:
-     funnyquit()
- else:
-     print("Please reutrn a valid answer. \n")
-
+    try:
+     f = open("file.txt", "w")
+     f.write("PEBKAC")
+     f.close()
+     pen = open("file.txt", "r")
+     print(pen.read())
+     #with open(file.txt, wb):
+        #  pa = input("Would you like to play again?\n Y/N")
+        #  if pa in sey:
+        #      quit
+        #      main()
+        #  elif pa in han:
+        #      funnyquit()
+        #  else:
+        #      print("Please reutrn a valid answer. \n")
+    except:
+     print("shit.")
+     sys.exit()
 
 #Game Start, weapon selection
 def main():
