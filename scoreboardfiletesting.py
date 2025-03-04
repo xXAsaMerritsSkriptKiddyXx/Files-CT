@@ -14,10 +14,10 @@ def crackballs():
     else:
         bscore += 1
         print("Bot")
-    scoreboard()
+    scoreboardsave()
     
 
-def scoreboard():
+def scoreboardsave():
     global bscore
     global pscore
     try:
