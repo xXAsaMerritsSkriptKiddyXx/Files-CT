@@ -22,7 +22,7 @@ def scoreboard():
     global pscore
     try:
      f = open("filetest.txt", "w+")
-     f.write(string(bscore) + "\n" + string(pscore) )
+     f.write(str(bscore) + "\n" + str(pscore))
      f.close()
      tst = open("filetest.txt", "r")
      print(tst.read())
