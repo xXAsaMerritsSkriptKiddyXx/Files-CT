@@ -27,7 +27,7 @@ def scoreboard():
      tst = open("filetest.txt", "r")
      print(tst.read())
     except:
-     print("AUUUUUUUUUUUUGHHHHHHHHHHHHHHHHH.")
+     print("File Read Error!")
      sys.exit()
 
 crackballs()
