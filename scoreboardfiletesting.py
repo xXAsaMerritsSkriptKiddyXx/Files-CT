@@ -1,4 +1,4 @@
-import random
+import random, sys
 
 pscore = 0
 bscore = 0
@@ -14,12 +14,15 @@ def crackballs():
     else:
         bscore += 1
         print("Bot")
+ scoreboard()
     
 
 def scoreboard():
+    global bscore
+    global pscore
     try:
-     f = open("filetest.txt", "w")
-     f.write("PEBKAC")
+     f = open("filetest.txt", "w+")
+     f.write(string(bscore) + "\n" + string(pscore) )
      f.close()
      tst = open("filetest.txt", "r")
      print(tst.read())
@@ -28,6 +31,3 @@ def scoreboard():
      sys.exit()
 
 crackballs()
-
-
-scoreboard()
