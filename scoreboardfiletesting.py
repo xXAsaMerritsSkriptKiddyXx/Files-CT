@@ -27,7 +27,7 @@ def scoreboard():
      print("AUUUUUUUUUUUUGHHHHHHHHHHHHHHHHH.")
      sys.exit()
 
-scoreboard()
-
-
 crackballs()
+
+
+scoreboard()
