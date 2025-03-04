@@ -14,7 +14,7 @@ def crackballs():
     else:
         bscore += 1
         print("Bot")
- scoreboard()
+    scoreboard()
     
 
 def scoreboard():
