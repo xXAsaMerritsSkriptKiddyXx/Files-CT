@@ -8,6 +8,8 @@ def funnyquit():
     sys.exit()      
 #Runs when game quits
 
+playerscore = 0
+botscore = 0
 
 # Blueprint for different weapons.
 class Weapon:
@@ -131,24 +133,37 @@ def starter():
 
 #Runs at the end of the game. Gives options to play again
 def playagain():
+
+         pa = input("Would you like to play again?\n Y/N")
+         if pa in sey:
+             quit
+             main()
+         elif pa in han:
+             funnyquit()
+         else:
+             print("Please reutrn a valid answer. \n")
+
+def scoreboardsave():
+    global botscore
+    global playerscore
     try:
-     f = open("file.txt", "w")
-     f.write("PEBKAC")
-     f.close()
-     pen = open("file.txt", "r")
-     print(pen.read())
-     #with open(file.txt, wb):
-        #  pa = input("Would you like to play again?\n Y/N")
-        #  if pa in sey:
-        #      quit
-        #      main()
-        #  elif pa in han:
-        #      funnyquit()
-        #  else:
-        #      print("Please reutrn a valid answer. \n")
+        with open("filetest.txt","w") as f:
+            f.write(f"Bot Score: {str(botscore)} | Player Score: {str(playerscore)}")
+            # f.write(str(botscore) + "\n" + str(playerscore)) # f"{str(botscore)}\n{str(playerscore)}"}
+        with open("filetest.txt", "r") as f:    
+            print(f.read())
+
+
+
+    #  f = open("filetest.txt", "w+")
+    #  f.write(str(botscore) + "\n" + str(playerscore))
+    #  f.close()
+    #  tst = open("filetest.txt", "r")
+    #  print(tst.read())
     except:
-     print("shit.")
+     print("File Read Error!")
      sys.exit()
+
 
 #Game Start, weapon selection
 def main():
@@ -188,6 +203,8 @@ def main():
 #Roulette functions
 def trigger():
     global hitc
+    global playerscore
+    global botscore
     sh = 0
     while sh <= selwep.shells:
         while user.x == True and comp.y == False:
@@ -198,6 +215,8 @@ def trigger():
                     #Only runs at end of game
                     if user.health <= 0:
                         print(user.name + " have gone kablooey.\n ")
+                        botscore += 1
+                        scoreboardsave()
                         playagain()
                     turnswap()
             #Only runs if you decide not to fire
@@ -211,6 +230,8 @@ def trigger():
                  quitp = random.randint(0,20)
                  if quitp <= comp.qchance:
                      print(comp.bname + " forefits! \n")
+                     playerscore += 1
+                     scoreboardsave()
                      playagain()
                  else:
                      if hitc <= selwep.liveR:
@@ -219,6 +240,8 @@ def trigger():
                          #Only runs at end of game
                          if comp.bhealth <= 0:
                              print(comp.bname + " has gone kablooey.\n ")
+                             playerscore += 1
+                             scoreboardsave()
                              playagain()
                          turnswap()
          #playagain()
