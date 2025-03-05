@@ -12,6 +12,8 @@ def funnyquit():
 
 playerscore = 0
 botscore = 0
+run = False
+firsttime = True
 
 # Blueprint for different weapons.
 class Weapon:
@@ -52,7 +54,7 @@ weapons.append(gau21int)
 # List for Weapon Options.
 # Combo of List and Dictionary gives optoins on which to refer to. 
 
-selwep = []
+selwep = None
 hitc = 0
 
 class Player:
@@ -118,6 +120,84 @@ def turnswap():
         comp.y = False
         print("It is now your turn!")
 
+#Runs at the end of the game. Gives options to play again
+def playagain():
+
+         pa = input("Would you like to play again?\n Y/N")
+         if pa in sey:
+             quit
+             main()
+         elif pa in han:
+             funnyquit()
+         else:
+             print("Please reutrn a valid answer. \n")
+
+
+import os
+
+def makefile(path,content=""):
+    with open(path, "w") as file:
+        file.write(content)
+
+if os.path.exists("roulettesaves"):
+    makefile("roulettesaves\\saves.txt")
+else:
+    os.mkdir("roulettesaves")
+    makefile("roulettesaves\\saves.txt")
+
+
+def scoreboardsave():
+    global botscore
+    global playerscore
+    try:
+        with open("roulettesaves\\saves.txt","w") as f:
+            f.write(f"Bot Score: {str(botscore)} | Player Score: {str(playerscore)}")
+        with open("roulettesaves\\saves.txt", "r") as f:    
+            print(f.read())
+
+    except:
+     print("File Read Error!")
+     sys.exit()
+
+#Game Start, weapon selection
+def main():
+    global firsttime, run
+    s = 1
+    shotsfired = 0
+    if s == 1:
+        if firsttime:
+             print("Hello. Welcome to Russian Roulette. Where your bravery will be put to the test.")
+             time.sleep(1)
+             print("Would you like to continue?")
+             firsttime = False
+             res = input("Y/N: \n").strip().lower()
+             if res in sey:
+                 run = True
+                 weapon_selection()
+             elif res in han:
+                 funnyquit()
+             else:
+                 print("Please return a valid answer between Yes or No.")
+        else:
+         weapon_selection()
+
+def weapon_selection():
+ global run, res, selwep
+ while(run):
+     print("Please pick a weapon: \n")
+    # for w, weapon in options.items():
+    #     print(w)
+    # userin = input().strip().lower()
+     for i, weapon in enumerate(weapons):
+            print(i+1, weapon.name)
+     userin = input().strip().lower()
+     if userin.isnumeric() and int(userin) <= len(weapons):
+         selwep = weapons[int(userin)-1]
+         print("\n You have chosen:" , selwep.type, "\n") 
+         starter()
+     else:
+         print("Please return an integer from the allowed list!")
+
 def starter():
     que = input("Would you like to go first? \n")
     if que in sey:
@@ -132,81 +212,9 @@ def starter():
     else:
      print("Please return a valid answer.") 
 
-
-#Runs at the end of the game. Gives options to play again
-def playagain():
-
-         pa = input("Would you like to play again?\n Y/N")
-         if pa in sey:
-             quit
-             main()
-         elif pa in han:
-             funnyquit()
-         else:
-             print("Please reutrn a valid answer. \n")
-
-def scoreboardsave():
-    global botscore
-    global playerscore
-    try:
-        with open("filetest.txt","w") as f:
-            f.write(f"Bot Score: {str(botscore)} | Player Score: {str(playerscore)}")
-            # f.write(str(botscore) + "\n" + str(playerscore)) # f"{str(botscore)}\n{str(playerscore)}"}
-        with open("filetest.txt", "r") as f:    
-            print(f.read())
-
-
-
-    #  f = open("filetest.txt", "w+")
-    #  f.write(str(botscore) + "\n" + str(playerscore))
-    #  f.close()
-    #  tst = open("filetest.txt", "r")
-    #  print(tst.read())
-    except:
-     print("File Read Error!")
-     sys.exit()
-
-
-#Game Start, weapon selection
-def main():
-    global selwep
-    s = 1
-    shotsfired = 0
-    if s == 1:
-        print("Hello. Welcome to Russian Roulette. Where your bravery will be put to the test.")
-        time.sleep(1)
-        print("Would you like to continue?")
-        res = input("Y/N: \n").strip().lower()
-        if res in sey:
-             run = True
-             while(run):
-                print("Please pick a weapon: \n")
-                # for w, weapon in options.items():
-                #     print(w)
-                # userin = input().strip().lower()
-                for i, weapon in enumerate(weapons):
-                    print(i+1, weapon.name)
-
-                userin = input().strip().lower()
-
-                if userin.isnumeric() and int(userin) <= len(weapons):
-                     selwep = weapons[int(userin)-1]
-                     print("\n You have chosen:" , selwep.type, "\n") 
-                     starter()
-                else:
-                 print("Please return an integer from the allowed list!")
-        elif res in han:
-            funnyquit()
-        else:
-             print("Please return a valid answer between Yes or No.")
-
-
-
 #Roulette functions
 def trigger():
-    global hitc
-    global playerscore
-    global botscore
+    global hitc, playerscore, botscore, selwep
     sh = 0
     while sh <= selwep.shells:
         while user.x == True and comp.y == False:
