@@ -1,11 +1,13 @@
-import random, sys, time
+import random, sys, time, os 
 
 def funnyquit():
     print("\n Then..")
     time.sleep(1)
     print("GET OUT! \n")
     time.sleep(1)
+    os.remove("filetest.txt")
     sys.exit()      
+
 #Runs when game quits
 
 playerscore = 0
