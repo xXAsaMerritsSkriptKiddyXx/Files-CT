@@ -5,7 +5,10 @@ def funnyquit():
     time.sleep(1)
     print("GET OUT! \n")
     time.sleep(1)
-    os.remove("filetest.txt")
+    try:
+        os.remove("saves.txt")
+    except FileNotFoundError as e:
+        pass
     sys.exit()      
 
 #Runs when game quits
@@ -120,20 +123,42 @@ def turnswap():
         comp.y = False
         print("It is now your turn!")
 
-#Runs at the end of the game. Gives options to play again
-def playagain():
+#Runs at the end of the game. Gives options to play again and file deletion
 
-         pa = input("Would you like to play again?\n Y/N")
-         if pa in sey:
-             quit
-             main()
-         elif pa in han:
-             funnyquit()
-         else:
-             print("Please reutrn a valid answer. \n")
+def endgamefilemanager():
+    print("Would you like to delete your save file?")
+    saveresponse = input("Y/N:")
+    if saveresponse in sey:
+        if os.path.exists("roulettesaves\\saves.txt"):
+            os.remove("roulettesaves\\saves.txt")
+            print("Save removed!")
+            time.sleep(1)
+            print("Exiting program!")
+            time.sleep(1)
+            sys.exit()
+    elif saveresponse in han:
+            print("Sucks to be you, deleting anyway!")
+            os.remove("roulettesaves\\saves.txt")
+            os.rmdir("roulettesaves")
+            time.sleep(1)
+            sys.exit()
+    else:
+            print("Invalid input. Please try again. \n")
+            time.sleep(1)
+            endgamefilemanager()
+
+def realquit():
+ quitresponse = input("Would you like to play again?: \n").strip().lower()
+ if quitresponse in sey:
+        main()
+ elif quitresponse in han:
+        endgamefilemanager()       
+ else:
+        print("Invalid input")
+        realquit()
 
 
-import os
+#File handling content
 
 def makefile(path,content=""):
     with open(path, "w") as file:
@@ -150,7 +175,7 @@ def scoreboardsave():
     global botscore
     global playerscore
     try:
-        with open("roulettesaves\\saves.txt","w") as f:
+        with open("roulettesaves\\saves.txt","r+") as f:
             f.write(f"Bot Score: {str(botscore)} | Player Score: {str(playerscore)}")
         with open("roulettesaves\\saves.txt", "r") as f:    
             print(f.read())
@@ -199,7 +224,7 @@ def weapon_selection():
          print("Please return an integer from the allowed list!")
 
 def starter():
-    que = input("Would you like to go first? \n")
+    que = input("Would you like to go first? \n").strip().lower()
     if que in sey:
      user.x = True
      comp.y = False
@@ -227,7 +252,7 @@ def trigger():
                         print(user.name + " have gone kablooey.\n ")
                         botscore += 1
                         scoreboardsave()
-                        playagain()
+                        realquit()
                     turnswap()
             #Only runs if you decide not to fire
             elif firc in han:
@@ -242,7 +267,7 @@ def trigger():
                      print(comp.bname + " forefits! \n")
                      playerscore += 1
                      scoreboardsave()
-                     playagain()
+                     realquit()
                  else:
                      if hitc <= selwep.liveR:
                          fireweapon() 
@@ -252,9 +277,9 @@ def trigger():
                              print(comp.bname + " has gone kablooey.\n ")
                              playerscore += 1
                              scoreboardsave()
-                             playagain()
+                             realquit()
                          turnswap()
-         #playagain()
+         #realquit()
 
 
 if __name__ == "__main__":
