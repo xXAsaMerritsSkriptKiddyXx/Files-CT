@@ -203,6 +203,8 @@ def main():
                  funnyquit()
              else:
                  print("Please return a valid answer between Yes or No.")
+                 firsttime = True
+                 main()
         else:
          weapon_selection()
 
