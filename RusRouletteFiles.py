@@ -212,9 +212,6 @@ def weapon_selection():
  global run, res, selwep
  while(run):
      print("Please pick a weapon: \n")
-    # for w, weapon in options.items():
-    #     print(w)
-    # userin = input().strip().lower()
      for i, weapon in enumerate(weapons):
             print(i+1, weapon.name)
      userin = input().strip().lower()
@@ -281,7 +278,6 @@ def trigger():
                              scoreboardsave()
                              realquit()
                          turnswap()
-         #realquit()
 
 
 if __name__ == "__main__":
